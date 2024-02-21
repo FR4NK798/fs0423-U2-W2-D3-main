@@ -1,0 +1,138 @@
+main {
+  font-size: 1.1em;
+}
+
+p {
+  color: white;
+  background-color: green;
+}
+
+nav {
+  display: block;
+}
+nav ul {
+  display: flex;
+  flex-direction: column;
+}
+@media screen and (min-width: 768px) {
+  nav ul {
+    flex-direction: row;
+  }
+}
+
+nav ul li {
+  font-size: 0.9em;
+}
+nav ul li:nth-of-type(2) {
+  display: none;
+}
+
+.buttons .primary {
+  color: white;
+  background-color: red;
+}
+.buttons .primary:hover {
+  color: black;
+  background-color: azure;
+}
+.buttons .secondary {
+  color: white;
+  background-color: blue;
+}
+.buttons .secondary:hover {
+  color: black;
+  background-color: pink;
+}
+
+p.main-par {
+  font-size: 1.5em;
+  font-weight: bold;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+
+h1 {
+  margin-left: 35px;
+}
+
+aside {
+  margin-left: 35px;
+}
+
+aside {
+  border-top: 2px solid gray;
+}
+
+button.spotify {
+  color: lightgreen;
+  background-color: black;
+  padding: 5px 10px;
+}
+button.spotify#first {
+  background-color: red;
+}
+
+article {
+  margin-top: 10px;
+  border: 2px solid green;
+  background-color: rgb(0, 250, 120);
+}
+
+aside {
+  margin-top: 10px;
+  border: 2px solid green;
+  background-color: rgb(240, 10, 190);
+}
+
+footer {
+  margin-top: 10px;
+  border: 2px solid green;
+  background-color: #fff;
+}
+
+.elemento1 {
+  font-size: 24px;
+}
+
+.elemento2 {
+  font-weight: 700;
+}
+
+.text-10px {
+  font-size: 10px;
+}
+
+.text-16px {
+  font-size: 16px;
+}
+
+.text-24px {
+  font-size: 24px;
+}
+
+.margin-xs {
+  margin: 10px;
+}
+
+.margin-sm {
+  margin: 12px;
+}
+
+.margin-normal {
+  margin: 16px;
+}
+
+.margin-lg {
+  margin: 24px;
+}
+
+.margin-xl {
+  margin: 32px;
+}
+
+.margin-xxl {
+  margin: 48px;
+}
+
+.custom-padding {
+  padding: 8px;
+}/*# sourceMappingURL=app.css.map */

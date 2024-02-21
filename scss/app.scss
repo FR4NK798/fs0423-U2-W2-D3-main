@@ -1,0 +1,303 @@
+// Features di SASS
+// 1) si può scrivere del normalissimo CSS
+main {
+  font-size: 1.1em;
+}
+
+p {
+  color: white;
+  background-color: green;
+}
+
+// nav {
+//   display: block;
+// }
+
+// nav ul {
+//   display: flex;
+//   flex-direction: column;
+// }
+
+// @media screen and (min-width: 768px) {
+//   nav ul {
+//     flex-direction: row;
+//   }
+// }
+
+// 2) SELETTORI NIDIFICATI / ANNIDATI
+nav {
+  display: block;
+  ul {
+    display: flex;
+    flex-direction: column;
+    // li {
+    //     // va a prendere nav ul li {}
+    //   font-size: 0.9em;
+    // }
+    @media screen and (min-width: 768px) {
+      flex-direction: row;
+    }
+  }
+}
+
+// 3) LAVORARE CON LE PSEUDOCLASSI
+
+// .buttons button.primary {
+//   color: white;
+//   background-color: red;
+// }
+
+// .buttons button.primary:hover {
+//   color: black;
+//   background-color: azure;
+// }
+
+nav {
+  ul {
+    li {
+      // va a prendere nav ul li {}
+      font-size: 0.9em;
+      &:nth-of-type(2) {
+        display: none;
+      }
+    }
+  }
+}
+
+// la & è un modo per riutilizzare il selettore raggiunto al fine di usare comodamente e in modo annidato una pseudo classe,
+// uno pseudoelemento (::after e ::before) o raggiungere ulteriori elementi annidati
+
+button {
+  // tutti gli stili per tutti i bottoni
+  &.primary {
+    // button.primary {}
+  }
+  &.secondary {
+    // button.secondary {}
+  }
+}
+
+button {
+  // tutti gli stili per tutti i bottoni
+  .primary {
+    // button .primary {}
+  }
+  .secondary {
+    // button .secondary {}
+  }
+}
+
+.buttons {
+  .primary {
+    // .buttons .primary {}
+    color: white;
+    background-color: red;
+    &:hover {
+      color: black;
+      background-color: azure;
+    }
+  }
+  .secondary {
+    // .buttons .secondary {}
+    color: white;
+    background-color: blue;
+    &:hover {
+      color: black;
+      background-color: pink;
+    }
+  }
+}
+
+// 4) UTILIZZARE UN PREFISSO COMUNE PER PROPRIETÀ SIMILI
+// p.main-par {
+//   font-size: 1.5em;
+//   font-weight: bold;
+//   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+//     'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+// }
+
+p.main-par {
+  font: {
+    size: 1.5em;
+    weight: bold;
+    family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+      'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  }
+}
+
+// 5) VARIABILI
+// le variabili in SASS servono per memorizzare dei valori.
+// i valori che salviamo potranno venire riutilizzati nelle regole di stile che scriviamo
+// concettualmente le variabili in SASS sono più simili alle costanti (perchè raramente le ri-assegneremo)
+
+// cosa possiamo salvare in una variabile SASS? quali sono i "tipi" di SASS?
+// - valori numerici (1, 50, 100, 10px, 2.5em, etc.)
+// - stringhe ('hello', "ciao")
+// - colori (red, blue, #ffcc00, rgb(0, 255, 0), rgba(0, 255, 0, 0.5))
+// - booleani (true, false)
+// - null
+// - valore combinati per proprietà "shortcut" (1px solid black, 5px 5px 10px 10px)
+// - liste di valori (10px, 16px, 24px) --> un po' come gli array in JS
+// - mappe di coppie chiave/valore --> un po' come gli oggetti in JS
+
+// es.
+$main-margin: 35px; // d'ora in poi posso riutilizzare questa quantità semplicemente utilizzando il suo nome $main-margin
+// utile se la andrò a riutilizzare più volte
+
+h1 {
+  margin-left: $main-margin;
+}
+
+aside {
+  margin-left: $main-margin;
+}
+
+$primary-color: rgb(5, 130, 130);
+$secondary-color: rgb(130, 130, 130);
+
+$div-border-standard: 2px solid gray;
+
+aside {
+  border-top: $div-border-standard;
+}
+
+// $sizes-map: (
+//   xs: 10px,
+//   sm: 12px,
+//   normal: 16px,
+//   lg: 24px,
+//   xl: 32px,
+//   xxl: 48px,
+// );
+
+// SASS sa utilizzare anche operatori logici, di comparazione, numerici
+// ==, !=, >, <, >=, <=
+// + - * /
+
+// 5) MIXINS
+// Un MIXIN è un blocco di regole CSS richiamabile con un singolo selettore
+
+$normal-padding: 5px 10px;
+
+@mixin buttonStyles {
+  color: lightgreen;
+  background-color: black;
+  padding: $normal-padding;
+}
+
+button.spotify {
+  @include buttonStyles;
+  // mi sono appena portato le tre regole sopra dentro questo selettore
+  // ora magari sovrascrivo il colore di sfondo, se mi serve
+  // anche solo su un particolare elemento
+  &#first {
+    background-color: red;
+  }
+}
+
+// altro utilizzo dei mixin
+// è possibile personalizzare un mixin in modo da diversificare il suo risultato
+// ad ogni utilizzo
+
+@mixin customStyles($myBackground: #fff) {
+  margin-top: 10px;
+  border: 2px solid green;
+  background-color: $myBackground;
+}
+
+article {
+  @include customStyles(rgb(0, 250, 120));
+}
+
+aside {
+  @include customStyles(rgb(240, 10, 190));
+}
+
+footer {
+  @include customStyles();
+  // margin-top: 10px;
+  // border: 2px solid green;
+  // background-color: ??? si becca il valore di default, #fff
+}
+
+// 6) INTERPOLAZIONE
+
+@mixin fontInterpolation($property, $value) {
+  // questo mixin applicherà delle regole su una proprietà dinamica relativa al font
+  font-#{$property}: $value;
+  // fonde una stringa con una variabile, in JS lo faremmo così: `font-${property}` oppure "font-" + property
+}
+
+.elemento1 {
+  @include fontInterpolation('size', 24px);
+  // mi sono appena portato dentro una proprietà "font-size: 24px"
+}
+
+.elemento2 {
+  @include fontInterpolation('weight', 700);
+}
+
+// 7) CICLI
+// è possibile in SASS utilizzare dei cicli per automatizzare la generazione di STILI ma anche di CLASSI
+$my-sizes: 10px, 16px, 24px;
+
+// un ciclo in SASS si definisce con la direttiva @each
+@each $individual-size in $my-sizes {
+  // questo ciclo ora scorre gli elementi di my-sizes, uno alla volta
+  // indivisual size vale 10px al primo giro, 16px al secondo e 24px al terzo
+  // qui dentro ora io GENERO CLASSI CSS
+  .text-#{$individual-size} {
+    font-size: $individual-size;
+  }
+}
+
+// ho appena generato 3 classi: .text-10px, .text-16px, .text-24px ognuna applicante un diverso font-size
+
+// boss finale: ciclo una mappa di coppie chiave/valore
+$sizes-map: (
+  xs: 10px,
+  sm: 12px,
+  normal: 16px,
+  lg: 24px,
+  xl: 32px,
+  xxl: 48px,
+);
+
+@each $breakpoint, $value in $sizes-map {
+  .margin-#{$breakpoint} {
+    margin: $value;
+  }
+}
+
+// 8) IF/ELSE
+// In SASS è possibile utilizzare delle direttive condizionali al fine di prendere delle decisioni
+// relativamente all'esistenza di una variabile, di una comparazione etc.
+@mixin generate-margin($value: null) {
+  .custom-margin {
+    @if $value {
+      margin: $value;
+    } @else {
+      margin: 10px;
+    }
+  }
+}
+
+@mixin add-padding($value: 0) {
+  .custom-padding {
+    @if $value > 16 {
+      padding: #{$value}px;
+    } @else {
+      padding: 8px;
+    }
+  }
+}
+
+// @include add-padding(20); <-- qui viene applicato padding: 20px
+@include add-padding(5); // <-- qui viene applicato padding: 8px
+// @include add-padding(); <-- qui viene applicato padding: 8px
+
+// 9) PARTIALS
+// SASS ci permette di lavorare su singoli, piccoli files che possono occuparsi i specifiche porzioni di stile
+// questo rende il lavoro più modulare e facilmente mantenibile
+
+// passiamo a style.scss
